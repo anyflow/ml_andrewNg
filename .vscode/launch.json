@@ -6,7 +6,7 @@
     "configurations": [{
         "type": "OctaveDebugger",
         "request": "launch",
-        "name": "Function or file to execute.",
+        "name": "Function or file to execute",
         // "program": "${command:AskForProgramName}",
         "program": "${file}",
         "octave": "/Applications/Octave-4.4.1.app/Contents/Resources/usr/bin/octave-cli",
