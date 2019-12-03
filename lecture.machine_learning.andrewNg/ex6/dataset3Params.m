@@ -23,12 +23,35 @@ sigma = 0.3;
 %        mean(double(predictions ~= yval))
 %
 
+candidates = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30];
+canC = candidates;
+canSigma = candidates;
 
+min = realmax;
 
+for c=1:size(canC, 2)
+  for s=1:size(canSigma, 2)
+    
+    printf('canC: %f | canSigma: %f\n', canC(c), canSigma(s));
+        
+    model= svmTrain(X, y, canC(c), @(x1, x2) gaussianKernel(x1, x2, canSigma(s)));
 
+    predictions = svmPredict(model, Xval);
 
+    prediction_error = mean(double(predictions ~= yval));
+    
+    if min > prediction_error
+      min = prediction_error;      
+      C = canC(c);
+      sigma = canSigma(s);
+      
+      printf('Found MIN : C: %f | Sigma: %f\n', C, sigma);
+    endif
+  
+  endfor
+endfor
 
-
+printf('Final Value for C: %f | Sigma: %f\n', C, sigma);
 % =========================================================================
 
 end
